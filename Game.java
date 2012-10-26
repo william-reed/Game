@@ -1,3 +1,5 @@
+package javagame;
+
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
 
