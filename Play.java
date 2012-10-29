@@ -32,7 +32,7 @@ public class Play extends BasicGameState {
 		worldMap = new Image("res/world.png");
 		menu = new Image("res/menu.png");
 		sprite1 = new Image("res/sprite1.png");
-		spritetest = new Image("res/SpriteSheetTrans.png");
+		spritetest = new Image("res/SpriteSheetTransX2.5.png");
 		Image[] walkUp = { new Image("res/buckysBack.png"),
 				new Image("res/buckysBack.png") }; // these are the images to be
 													// used in the "walkUp"
@@ -99,8 +99,8 @@ public class Play extends BasicGameState {
 		Input input = gc.getInput();
 			
 		// sprite sheet set up
-		int spriteWidth = 24; // width of each sprite
-		int spriteHeight = 32; // height of each sprite
+		int spriteWidth = 60; // width of each sprite
+		int spriteHeight = 80; // height of each sprite
 		int spacing = 0; // 0 px between sprites
 		SpriteSheet sheet = new SpriteSheet(spritetest, spriteWidth,
 				spriteHeight, spacing); // creates multiple Image2D objects via
