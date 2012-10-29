@@ -15,6 +15,7 @@ public class Play extends BasicGameState {
 			sprite04;
 	boolean quit = false;
 	boolean go = true;
+	boolean play = true;
 	boolean move01 = true;
 	boolean move02, move03, move04, move05, move06, move07, move08;
 	int[] duration = { 200, 200 }; // duration or length of the frame
@@ -101,80 +102,67 @@ public class Play extends BasicGameState {
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
 		Input input = gc.getInput();
-		
-		//Homless man path
-		
-		if(move01 == true){
-			homelessX += .04f;
-			if (homelessX > 700){
-				move01 = false;
-				move02 = true;
+
+		// Homless man path
+		if (play == true) {
+			if (move01 == true) {
+				homelessX += .04f;
+				if (homelessX > 700) {
+					move01 = false;
+					move02 = true;
+				}
 			}
-		}
-		if(move02 == true){
-			homelessY += .04f;
-			if (homelessY > 900){
-				move02 = false;
-				move03 = true;
+			if (move02 == true) {
+				homelessY += .04f;
+				if (homelessY > 900) {
+					move02 = false;
+					move03 = true;
+				}
 			}
-		}
-		if(move03 == true){
-			homelessX += .04f;
-			if(homelessX > 800){
-				move03 = false;
-				move04 = true;
+			if (move03 == true) {
+				homelessX += .04f;
+				if (homelessX > 800) {
+					move03 = false;
+					move04 = true;
+				}
 			}
-		}
-		if(move04 == true){
-			homelessY += .04f;
-			if(homelessY > 1000){
-				move04 = false;
-				move05 = true;
+			if (move04 == true) {
+				homelessY += .04f;
+				if (homelessY > 1000) {
+					move04 = false;
+					move05 = true;
+				}
 			}
-		}
-		if(move05 == true){
-			homelessX -= .04f;
-			if(homelessX < 675){
-				move05 = false;
-				move06 = true;
+			if (move05 == true) {
+				homelessX -= .04f;
+				if (homelessX < 675) {
+					move05 = false;
+					move06 = true;
+				}
 			}
-		}
-		if(move06 == true){
-			homelessY += .04f;
-			if(homelessY > 1100){
-				move06 = false;
-				move07 = true;
+			if (move06 == true) {
+				homelessY += .04f;
+				if (homelessY > 1100) {
+					move06 = false;
+					move07 = true;
+				}
 			}
-		}
-		if(move07 == true){
-			homelessX -= .04f;
-			if(homelessX < 600){
-				move07 = false;
-				move08 = true;
+			if (move07 == true) {
+				homelessX -= .04f;
+				if (homelessX < 600) {
+					move07 = false;
+					move08 = true;
+				}
 			}
-		}
-		if(move08 == true){
-			homelessY -= .04f;
-			if(homelessY < 743){
-				move08 = false;
-				move01 = true;
+			if (move08 == true) {
+				homelessY -= .04f;
+				if (homelessY < 743) {
+					move08 = false;
+					move01 = true;
+				}
 			}
+
 		}
-		
-		/*		
-		if(go == true){
-			homelessX += .04f;
-			if(homelessX > 800){
-				go = false;
-			}
-		}
-		if(go == false){
-			homelessX -= .04f;
-			if(homelessX < 600){
-				go = true;
-			}
-		}
-		*/
 		// sprite sheet set up
 		int spriteWidth = 60; // width of each sprite
 		int spriteHeight = 80; // height of each sprite
@@ -189,7 +177,7 @@ public class Play extends BasicGameState {
 
 		// during the game if the user hits the up arrow...
 		if (quit == false) {
-			if (input.isKeyDown(Input.KEY_UP)) {
+			if (input.isKeyDown(Input.KEY_UP) || input.isKeyDown(Input.KEY_W)) {
 				bucky = movingUp; // change bucky to up image
 				buckyPositionY += delta * .1f; // increase the Y coordinates of
 												// bucky (move him up)
@@ -198,7 +186,7 @@ public class Play extends BasicGameState {
 				 * // dont let him keep going up // if he reaches the top }
 				 */
 			}
-			if (input.isKeyDown(Input.KEY_DOWN)) {
+			if (input.isKeyDown(Input.KEY_DOWN) || input.isKeyDown(Input.KEY_S)) {
 				bucky = movingDown;
 				buckyPositionY -= delta * .1f;
 				/*
@@ -206,14 +194,14 @@ public class Play extends BasicGameState {
 				 * }
 				 */
 			}
-			if (input.isKeyDown(Input.KEY_LEFT)) {
+			if (input.isKeyDown(Input.KEY_LEFT) || input.isKeyDown(Input.KEY_A)) {
 				bucky = movingLeft;
 				buckyPositionX += delta * .1f;
 				/*
 				 * if (buckyPositionX > 99) { buckyPositionX -= delta * .1f; }
 				 */
 			}
-			if (input.isKeyDown(Input.KEY_RIGHT)) {
+			if (input.isKeyDown(Input.KEY_RIGHT) || input.isKeyDown(Input.KEY_D)) {
 				bucky = movingRight;
 				buckyPositionX -= delta * .1f;
 				/*
@@ -227,12 +215,14 @@ public class Play extends BasicGameState {
 		// escape
 		if (input.isKeyDown(Input.KEY_ESCAPE)) {
 			quit = true;
+			play = false;
 		}
 
 		// when they hit escape
 		if (quit == true) {
 			if (input.isKeyDown(Input.KEY_R)) {
 				quit = false;
+				play = true;
 			}
 			if (input.isKeyDown(Input.KEY_M)) {
 				quit = false;
