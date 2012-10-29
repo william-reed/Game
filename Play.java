@@ -14,6 +14,7 @@ public class Play extends BasicGameState {
 	Image worldMap, menu, sprite1, spritetest, sprite01, sprite02, sprite03,
 			sprite04;
 	boolean quit = false;
+	boolean go = true;
 	int[] duration = { 200, 200 }; // duration or length of the frame
 	float buckyPositionX = 0; // bucky will start at coordinates 0,0
 	float buckyPositionY = 0;
@@ -97,7 +98,19 @@ public class Play extends BasicGameState {
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
 		Input input = gc.getInput();
-			
+		
+		if(go == true){
+			spritex += .04f;
+			if(spritex > 800){
+				go = false;
+			}
+		}
+		if(go == false){
+			spritex -= .04f;
+			if(spritex < 600){
+				go = true;
+			}
+		}
 		// sprite sheet set up
 		int spriteWidth = 60; // width of each sprite
 		int spriteHeight = 80; // height of each sprite
