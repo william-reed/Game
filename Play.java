@@ -15,6 +15,8 @@ public class Play extends BasicGameState {
 			sprite04;
 	boolean quit = false;
 	boolean go = true;
+	boolean move01 = true;
+	boolean move02, move03, move04, move05, move06, move07, move08;
 	int[] duration = { 200, 200 }; // duration or length of the frame
 	float buckyPositionX = 0; // bucky will start at coordinates 0,0
 	float buckyPositionY = 0;
@@ -67,13 +69,14 @@ public class Play extends BasicGameState {
 		bucky.draw(shiftX, shiftY); // draw bucky at 320, 160 (center of the
 									// screen)4
 		sprite1.draw(buckyPositionX + homelessX, buckyPositionY + homelessY);// first
-																			// sprite
+																				// sprite
 		// spritesheet test
 
-		sprite01.draw(0, 0);
-		sprite02.draw(80, 0);
-		sprite03.draw(150, 0);
-		sprite04.draw(400, 0);
+		/*
+		 * sprite01.draw(0, 0); sprite02.draw(80, 0); sprite03.draw(150, 0);
+		 * sprite04.draw(400, 0);
+		 */
+
 		// test
 
 		g.drawString("X Position: " + buckyPositionX + "\nY Position: "
@@ -99,6 +102,66 @@ public class Play extends BasicGameState {
 			throws SlickException {
 		Input input = gc.getInput();
 		
+		//Homless man path
+		
+		if(move01 == true){
+			homelessX += .04f;
+			if (homelessX > 700){
+				move01 = false;
+				move02 = true;
+			}
+		}
+		if(move02 == true){
+			homelessY += .04f;
+			if (homelessY > 900){
+				move02 = false;
+				move03 = true;
+			}
+		}
+		if(move03 == true){
+			homelessX += .04f;
+			if(homelessX > 800){
+				move03 = false;
+				move04 = true;
+			}
+		}
+		if(move04 == true){
+			homelessY += .04f;
+			if(homelessY > 1000){
+				move04 = false;
+				move05 = true;
+			}
+		}
+		if(move05 == true){
+			homelessX -= .04f;
+			if(homelessX < 675){
+				move05 = false;
+				move06 = true;
+			}
+		}
+		if(move06 == true){
+			homelessY += .04f;
+			if(homelessY > 1100){
+				move06 = false;
+				move07 = true;
+			}
+		}
+		if(move07 == true){
+			homelessX -= .04f;
+			if(homelessX < 600){
+				move07 = false;
+				move08 = true;
+			}
+		}
+		if(move08 == true){
+			homelessY -= .04f;
+			if(homelessY < 743){
+				move08 = false;
+				move01 = true;
+			}
+		}
+		
+		/*		
 		if(go == true){
 			homelessX += .04f;
 			if(homelessX > 800){
@@ -111,6 +174,7 @@ public class Play extends BasicGameState {
 				go = true;
 			}
 		}
+		*/
 		// sprite sheet set up
 		int spriteWidth = 60; // width of each sprite
 		int spriteHeight = 80; // height of each sprite
