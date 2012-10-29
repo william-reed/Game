@@ -30,7 +30,7 @@ public class Play extends BasicGameState {
 
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
-		worldMap = new Image("res/world.png");
+		worldMap = new Image("res/level1.png");
 		menu = new Image("res/menu.png");
 		sprite1 = new Image("res/homeless.png");
 		spritetest = new Image("res/sprite1.png");
