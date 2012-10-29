@@ -22,8 +22,8 @@ public class Play extends BasicGameState {
 											// appears in middle
 	float shiftY = buckyPositionY + 281; // half the length and half the width
 											// of the screen
-	float spritex = 600;
-	float spritey = 743;
+	float homelessX = 600;
+	float homelessY = 743;
 
 	public Play(int state) {
 	}
@@ -32,8 +32,8 @@ public class Play extends BasicGameState {
 			throws SlickException {
 		worldMap = new Image("res/world.png");
 		menu = new Image("res/menu.png");
-		sprite1 = new Image("res/sprite1.png");
-		spritetest = new Image("res/SpriteSheetTransX2.5.png");
+		sprite1 = new Image("res/homeless.png");
+		spritetest = new Image("res/sprite1.png");
 		Image[] walkUp = { new Image("res/buckysBack.png"),
 				new Image("res/buckysBack.png") }; // these are the images to be
 													// used in the "walkUp"
@@ -66,7 +66,7 @@ public class Play extends BasicGameState {
 														// start
 		bucky.draw(shiftX, shiftY); // draw bucky at 320, 160 (center of the
 									// screen)4
-		sprite1.draw(buckyPositionX + spritex, buckyPositionY + spritey);// first
+		sprite1.draw(buckyPositionX + homelessX, buckyPositionY + homelessY);// first
 																			// sprite
 		// spritesheet test
 
@@ -77,8 +77,8 @@ public class Play extends BasicGameState {
 		// test
 
 		g.drawString("X Position: " + buckyPositionX + "\nY Position: "
-				+ buckyPositionY + "\nSpritex: " + spritex + "\nSpritey: "
-				+ spritey, 750, 20); // indicator
+				+ buckyPositionY + "\nSpritex: " + homelessX + "\nSpritey: "
+				+ homelessY, 750, 20); // indicator
 		// to
 		// see
 		// where
@@ -100,14 +100,14 @@ public class Play extends BasicGameState {
 		Input input = gc.getInput();
 		
 		if(go == true){
-			spritex += .04f;
-			if(spritex > 800){
+			homelessX += .04f;
+			if(homelessX > 800){
 				go = false;
 			}
 		}
 		if(go == false){
-			spritex -= .04f;
-			if(spritex < 600){
+			homelessX -= .04f;
+			if(homelessX < 600){
 				go = true;
 			}
 		}
