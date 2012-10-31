@@ -19,11 +19,11 @@ public class Play extends BasicGameState {
 	boolean move01 = true;
 	boolean move02, move03, move04, move05, move06, move07, move08;
 	int[] duration = { 200, 200 }; // duration or length of the frame
-	float buckyPositionX = 0; // bucky will start at coordinates 0,0
-	float buckyPositionY = 0;
-	float shiftX = buckyPositionX + 500; // this will shift the screen so bucky
+	float buckyPositionX = -1200; // bucky will start at coordinates 0,0
+	float buckyPositionY = -1200;
+	float shiftX = buckyPositionX + 1700; // this will shift the screen so bucky
 											// appears in middle
-	float shiftY = buckyPositionY + 281; // half the length and half the width
+	float shiftY = buckyPositionY + 1481; // half the length and half the width
 											// of the screen
 	float homelessX = 600;
 	float homelessY = 743;
