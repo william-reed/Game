@@ -181,33 +181,34 @@ public class Play extends BasicGameState {
 				bucky = movingUp; // change bucky to up image
 				buckyPositionY += delta * .1f; // increase the Y coordinates of
 												// bucky (move him up)
-				/*
-				 * if (buckyPositionY > -321) { buckyPositionY -= delta * .1f;
-				 * // dont let him keep going up // if he reaches the top }
-				 */
+				
+				  if (buckyPositionY > -1071) { buckyPositionY -= delta * .1f;
+				 // dont let him keep going up // if he reaches the top 
+				  }
+				 
 			}
 			if (input.isKeyDown(Input.KEY_DOWN) || input.isKeyDown(Input.KEY_S)) {
 				bucky = movingDown;
 				buckyPositionY -= delta * .1f;
-				/*
-				 * if (buckyPositionY < -1080) { buckyPositionY += delta * .1f;
-				 * }
-				 */
+				
+				  if (buckyPositionY < -2330) { buckyPositionY += delta * .1f;
+				  }
+				 
 			}
 			if (input.isKeyDown(Input.KEY_LEFT) || input.isKeyDown(Input.KEY_A)) {
 				bucky = movingLeft;
 				buckyPositionX += delta * .1f;
-				/*
-				 * if (buckyPositionX > 99) { buckyPositionX -= delta * .1f; }
-				 */
+				
+				  if (buckyPositionX > -864) { buckyPositionX -= delta * .1f; }
+				 
 			}
 			if (input.isKeyDown(Input.KEY_RIGHT) || input.isKeyDown(Input.KEY_D)) {
 				bucky = movingRight;
 				buckyPositionX -= delta * .1f;
-				/*
-				 * if (buckyPositionX < -1060) { buckyPositionX += delta * .1f;
-				 * }
-				 */
+				
+				  if (buckyPositionX < -2104) { buckyPositionX += delta * .1f;
+				  }
+				 
 			}
 		} else {
 		}
