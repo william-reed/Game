@@ -4,20 +4,15 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
 
 public class Play extends BasicGameState {
-
-	Animation bucky, movingUp, movingDown, movingLeft, movingRight; // 4
-																	// animations,
-																	// bucky
-																	// will be
-																	// set to
-																	// one
-	Image worldMap, menu, sprite1, spritetest, sprite01, sprite02, sprite03,
-			sprite04;
+	Image worldMap, menu, sprite1, spritetest, spriteDown, spriteUp,
+			spriteRight, spriteLeft;
 	boolean quit = false;
 	boolean go = true;
 	boolean play = true;
 	boolean move01 = true;
-	boolean move02, move03, move04, move05, move06, move07, move08;
+	boolean down = true;
+	boolean move02, move03, move04, move05, move06, move07, move08, up, left,
+			right;
 	int[] duration = { 200, 200 }; // duration or length of the frame
 	float buckyPositionX = -1200; // bucky will start at coordinates 0,0
 	float buckyPositionY = -1200;
@@ -37,59 +32,41 @@ public class Play extends BasicGameState {
 		menu = new Image("res/menu.png");
 		sprite1 = new Image("res/homeless.png");
 		spritetest = new Image("res/sprite1.png");
-		Image[] walkUp = { new Image("res/buckysBack.png"),
-				new Image("res/buckysBack.png") }; // these are the images to be
-													// used in the "walkUp"
-													// animation
-		Image[] walkDown = { new Image("res/buckysFront.png"),
-				new Image("res/buckysFront.png") };
-		Image[] walkLeft = { new Image("res/buckysLeft.png"),
-				new Image("res/buckysLeft.png") };
-		Image[] walkRight = { new Image("res/buckysRight.png"),
-				new Image("res/buckysRight.png") };
-
-		movingUp = new Animation(walkUp, duration, false); // each animation
-															// takes array of
-															// images, duration
-															// for each image,
-															// and autoUpdate
-															// (just set to
-															// false)
-		movingDown = new Animation(walkDown, duration, false);
-		movingLeft = new Animation(walkLeft, duration, false);
-		movingRight = new Animation(walkRight, duration, false);
-		bucky = movingDown; // by default as soon as game loads, bucky will be
-							// facing down
+		// sprite sheet set up
+		int spriteWidth = 60; // width of each sprite
+		int spriteHeight = 80; // height of each sprite
+		int spacing = 0; // 0 px between sprites
+		SpriteSheet sheet = new SpriteSheet(spritetest, spriteWidth,
+				spriteHeight, spacing); // creates multiple Image2D objects via
+										// getSubImage
+		spriteDown = sheet.getSprite(1, 2); // gets sprite at index (0, 0)
+		spriteUp = sheet.getSprite(1, 0);
+		spriteRight = sheet.getSprite(2, 1);
+		spriteLeft = sheet.getSprite(2, 3);
 	}
 
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
-
-		worldMap.draw(buckyPositionX, buckyPositionY); // draw the map at 0,0 to
-														// start
-		bucky.draw(shiftX, shiftY); // draw bucky at 320, 160 (center of the
-									// screen)4
-		sprite1.draw(buckyPositionX + homelessX, buckyPositionY + homelessY);// first
-																				// sprite
-		// spritesheet test
-
-		/*
-		 * sprite01.draw(0, 0); sprite02.draw(80, 0); sprite03.draw(150, 0);
-		 * sprite04.draw(400, 0);
-		 */
-
-		// test
-
+		// map
+		worldMap.draw(buckyPositionX, buckyPositionY);
+		// main sprite
+		if (down == true) {
+			spriteDown.draw(shiftX, shiftY);
+		}
+		if (up == true) {
+			spriteUp.draw(shiftX, shiftY);
+		}
+		if (right == true) {
+			spriteRight.draw(shiftX, shiftY);
+		}
+		if (left == true) {
+			spriteLeft.draw(shiftX, shiftY);
+		}
+		// first sprite
+		sprite1.draw(buckyPositionX + homelessX, buckyPositionY + homelessY);
 		g.drawString("X Position: " + buckyPositionX + "\nY Position: "
 				+ buckyPositionY + "\nSpritex: " + homelessX + "\nSpritey: "
-				+ homelessY, 750, 20); // indicator
-		// to
-		// see
-		// where
-		// bucky
-		// is
-		// in his world
-
+				+ homelessY, 750, 20);
 		// when they press escape
 		if (quit == true) {
 			menu.draw(0, 0);
@@ -163,52 +140,59 @@ public class Play extends BasicGameState {
 			}
 
 		}
-		// sprite sheet set up
-		int spriteWidth = 60; // width of each sprite
-		int spriteHeight = 80; // height of each sprite
-		int spacing = 0; // 0 px between sprites
-		SpriteSheet sheet = new SpriteSheet(spritetest, spriteWidth,
-				spriteHeight, spacing); // creates multiple Image2D objects via
-										// getSubImage
-		sprite01 = sheet.getSprite(0, 0); // gets sprite at index (0, 0)
-		sprite02 = sheet.getSprite(1, 0);
-		sprite03 = sheet.getSprite(2, 0);
-		sprite04 = sheet.getSprite(3, 0);
 
 		// during the game if the user hits the up arrow...
 		if (quit == false) {
 			if (input.isKeyDown(Input.KEY_UP) || input.isKeyDown(Input.KEY_W)) {
-				bucky = movingUp; // change bucky to up image
+				up = true;
+				right = false;
+				left = false;
+				down = false;
 				buckyPositionY += delta * .1f; // increase the Y coordinates of
 												// bucky (move him up)
-				
-				  if (buckyPositionY > -1071) { buckyPositionY -= delta * .1f;
-				 // dont let him keep going up // if he reaches the top 
-				  }
-				 
+
+				if (buckyPositionY > -1059) {
+					buckyPositionY -= delta * .1f;
+
+				}
+
 			}
 			if (input.isKeyDown(Input.KEY_DOWN) || input.isKeyDown(Input.KEY_S)) {
-				bucky = movingDown;
+				down = true;
+				up = false;
+				left = false;
+				right = false;
 				buckyPositionY -= delta * .1f;
-				
-				  if (buckyPositionY < -2330) { buckyPositionY += delta * .1f;
-				  }
-				 
+
+				if (buckyPositionY < -2289) {
+					buckyPositionY += delta * .1f;
+				}
+
 			}
 			if (input.isKeyDown(Input.KEY_LEFT) || input.isKeyDown(Input.KEY_A)) {
-				bucky = movingLeft;
+				left = true;
+				right = false;
+				up = false;
+				down = false;
 				buckyPositionX += delta * .1f;
-				
-				  if (buckyPositionX > -864) { buckyPositionX -= delta * .1f; }
-				 
+
+				if (buckyPositionX > -853) {
+					buckyPositionX -= delta * .1f;
+				}
+
 			}
-			if (input.isKeyDown(Input.KEY_RIGHT) || input.isKeyDown(Input.KEY_D)) {
-				bucky = movingRight;
+			if (input.isKeyDown(Input.KEY_RIGHT)
+					|| input.isKeyDown(Input.KEY_D)) {
+				right = true;
+				left = false;
+				down = false;
+				up = false;
 				buckyPositionX -= delta * .1f;
-				
-				  if (buckyPositionX < -2104) { buckyPositionX += delta * .1f;
-				  }
-				 
+
+				if (buckyPositionX < -2094) {
+					buckyPositionX += delta * .1f;
+				}
+
 			}
 		} else {
 		}
