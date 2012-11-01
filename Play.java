@@ -5,7 +5,7 @@ import org.newdawn.slick.state.*;
 
 public class Play extends BasicGameState {
 	Image worldMap, menu, sprite1, spritetest, spriteDown, spriteUp,
-			spriteRight, spriteLeft;
+			spriteRight, spriteLeft, test, spriteUp01, spriteUp02;
 	boolean quit = false;
 	boolean go = true;
 	boolean play = true;
@@ -14,6 +14,7 @@ public class Play extends BasicGameState {
 	boolean move02, move03, move04, move05, move06, move07, move08, up, left,
 			right;
 	int[] duration = { 200, 200 }; // duration or length of the frame
+	double count = 0;
 	float buckyPositionX = -1200; // bucky will start at coordinates 0,0
 	float buckyPositionY = -1200;
 	float shiftX = buckyPositionX + 1700; // this will shift the screen so bucky
@@ -43,6 +44,8 @@ public class Play extends BasicGameState {
 		spriteUp = sheet.getSprite(1, 0);
 		spriteRight = sheet.getSprite(2, 1);
 		spriteLeft = sheet.getSprite(2, 3);
+		spriteUp01 = sheet.getSprite (0,0);
+		spriteUp02 = sheet.getSprite(2,0);
 	}
 
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
@@ -54,7 +57,8 @@ public class Play extends BasicGameState {
 			spriteDown.draw(shiftX, shiftY);
 		}
 		if (up == true) {
-			spriteUp.draw(shiftX, shiftY);
+			//spriteUp.draw(shiftX, shiftY);
+			test.draw(shiftX, shiftY);
 		}
 		if (right == true) {
 			spriteRight.draw(shiftX, shiftY);
@@ -66,7 +70,7 @@ public class Play extends BasicGameState {
 		sprite1.draw(buckyPositionX + homelessX, buckyPositionY + homelessY);
 		g.drawString("X Position: " + buckyPositionX + "\nY Position: "
 				+ buckyPositionY + "\nSpritex: " + homelessX + "\nSpritey: "
-				+ homelessY, 750, 20);
+				+ homelessY + "\nCount " + count, 750, 20);
 		// when they press escape
 		if (quit == true) {
 			menu.draw(0, 0);
@@ -79,7 +83,17 @@ public class Play extends BasicGameState {
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
 		Input input = gc.getInput();
-
+		
+		if(count<2){
+			count+= .05;
+		}else{
+			count = 0;
+		}
+		if(count < 1 ){
+			test = spriteUp01;
+		}else{
+			test = spriteUp02;
+		}
 		// Homless man path
 		if (play == true) {
 			if (move01 == true) {
