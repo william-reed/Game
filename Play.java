@@ -5,7 +5,7 @@ import org.newdawn.slick.state.*;
 
 public class Play extends BasicGameState {
 	Image worldMap, menu, sprite1, spritetest, spriteDown, spriteUp,
-			spriteRight, spriteLeft, test, spriteUp01, spriteUp02;
+			spriteRight, spriteLeft, spriteUp01, spriteUp02, upAnimation;
 	boolean quit = false;
 	boolean go = true;
 	boolean play = true;
@@ -58,7 +58,7 @@ public class Play extends BasicGameState {
 		}
 		if (up == true) {
 			//spriteUp.draw(shiftX, shiftY);
-			test.draw(shiftX, shiftY);
+			upAnimation.draw(shiftX, shiftY);
 		}
 		if (right == true) {
 			spriteRight.draw(shiftX, shiftY);
@@ -84,15 +84,19 @@ public class Play extends BasicGameState {
 			throws SlickException {
 		Input input = gc.getInput();
 		
-		if(count<2){
-			count+= .05;
+		if(count<4){
+			count+= .08;
 		}else{
 			count = 0;
 		}
 		if(count < 1 ){
-			test = spriteUp01;
-		}else{
-			test = spriteUp02;
+			upAnimation = spriteUp;
+		}else if(count > 1 && count < 2){
+			upAnimation = spriteUp01;
+		}else if(count >2 && count <3){
+			upAnimation = spriteUp;
+		}else if(count > 3){
+			upAnimation = spriteUp02;
 		}
 		// Homless man path
 		if (play == true) {
