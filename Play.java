@@ -4,15 +4,17 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
 
 public class Play extends BasicGameState {
-	Image worldMap, menu, sprite1, spritetest, spriteDown, spriteUp,
-			spriteRight, spriteLeft, spriteUp01, spriteUp02, upAnimation;
+	Image worldMap, menu, river, sprite1, spritetest, spriteDown, spriteUp,
+			spriteRight, spriteLeft, spriteUp01, spriteUp02, spriteDown01,
+			spriteDown02, spriteLeft01, spriteLeft02, spriteRight01, spriteRight02, upAnimation, downAnimation, rightAnimation,
+			leftAnimation;
 	boolean quit = false;
 	boolean go = true;
 	boolean play = true;
 	boolean move01 = true;
 	boolean down = true;
 	boolean move02, move03, move04, move05, move06, move07, move08, up, left,
-			right;
+			right, movingLeft, movingRight, movingUp, movingDown;
 	int[] duration = { 200, 200 }; // duration or length of the frame
 	double count = 0;
 	float buckyPositionX = -1200; // bucky will start at coordinates 0,0
@@ -31,6 +33,7 @@ public class Play extends BasicGameState {
 			throws SlickException {
 		worldMap = new Image("res/level1.png");
 		menu = new Image("res/menu.png");
+		river = new Image("res/river.png");
 		sprite1 = new Image("res/homeless.png");
 		spritetest = new Image("res/sprite1.png");
 		// sprite sheet set up
@@ -42,29 +45,36 @@ public class Play extends BasicGameState {
 										// getSubImage
 		spriteDown = sheet.getSprite(1, 2); // gets sprite at index (0, 0)
 		spriteUp = sheet.getSprite(1, 0);
-		spriteRight = sheet.getSprite(2, 1);
-		spriteLeft = sheet.getSprite(2, 3);
-		spriteUp01 = sheet.getSprite (0,0);
-		spriteUp02 = sheet.getSprite(2,0);
+		spriteRight = sheet.getSprite(1, 1);
+		spriteLeft = sheet.getSprite(1, 3);
+		spriteUp01 = sheet.getSprite(0, 0);
+		spriteUp02 = sheet.getSprite(2, 0);
+		spriteDown01 = sheet.getSprite(0, 2);
+		spriteDown02 = sheet.getSprite(2, 2);
+		spriteRight01 = sheet.getSprite(0, 1);
+		spriteRight02 = sheet.getSprite(2, 1);
+		spriteLeft01 = sheet.getSprite(0, 3);
+		spriteLeft02 = sheet.getSprite(2, 3);
 	}
 
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
 		// map
 		worldMap.draw(buckyPositionX, buckyPositionY);
+		river.draw(-00, -1000);
 		// main sprite
 		if (down == true) {
-			spriteDown.draw(shiftX, shiftY);
+			downAnimation.draw(shiftX, shiftY);
 		}
 		if (up == true) {
-			//spriteUp.draw(shiftX, shiftY);
+			// spriteUp.draw(shiftX, shiftY);
 			upAnimation.draw(shiftX, shiftY);
 		}
 		if (right == true) {
-			spriteRight.draw(shiftX, shiftY);
+			rightAnimation.draw(shiftX, shiftY);
 		}
 		if (left == true) {
-			spriteLeft.draw(shiftX, shiftY);
+			leftAnimation.draw(shiftX, shiftY);
 		}
 		// first sprite
 		sprite1.draw(buckyPositionX + homelessX, buckyPositionY + homelessY);
@@ -83,20 +93,55 @@ public class Play extends BasicGameState {
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
 		Input input = gc.getInput();
-		
-		if(count<4){
-			count+= .08;
-		}else{
+
+		if (count < 4) {
+			count += .1;
+		} else {
 			count = 0;
 		}
-		if(count < 1 ){
-			upAnimation = spriteUp;
-		}else if(count > 1 && count < 2){
-			upAnimation = spriteUp01;
-		}else if(count >2 && count <3){
-			upAnimation = spriteUp;
-		}else if(count > 3){
-			upAnimation = spriteUp02;
+		if (movingUp = true) {
+			if (count < 1) {
+				upAnimation = spriteUp;
+			} else if (count > 1 && count < 2) {
+				upAnimation = spriteUp01;
+			} else if (count > 2 && count < 3) {
+				upAnimation = spriteUp;
+			} else if (count > 3) {
+				upAnimation = spriteUp02;
+			}
+		}
+		if (movingDown = true) {
+			if (count < 1) {
+				downAnimation = spriteDown;
+			} else if (count > 1 && count < 2) {
+				downAnimation = spriteDown01;
+			} else if (count > 2 && count < 3) {
+				downAnimation = spriteDown;
+			} else if (count > 3) {
+				downAnimation = spriteDown02;
+			}
+		}
+		if (movingLeft = true) {
+			if (count < 1) {
+				leftAnimation = spriteLeft;
+			} else if (count > 1 && count < 2) {
+				leftAnimation = spriteLeft01;
+			} else if (count > 2 && count < 3) {
+				leftAnimation = spriteLeft;
+			} else if (count > 3) {
+				leftAnimation = spriteLeft02;
+			}
+		}
+		if (movingRight = true) {
+			if (count < 1) {
+				rightAnimation = spriteRight;
+			} else if (count > 1 && count < 2) {
+				rightAnimation = spriteRight01;
+			} else if (count > 2 && count < 3) {
+				rightAnimation = spriteRight;
+			} else if (count > 3) {
+				rightAnimation = spriteRight02;
+			}
 		}
 		// Homless man path
 		if (play == true) {
@@ -166,20 +211,25 @@ public class Play extends BasicGameState {
 				right = false;
 				left = false;
 				down = false;
-				buckyPositionY += delta * .1f; // increase the Y coordinates of
-												// bucky (move him up)
-
+				movingUp = true;
+				movingLeft = false;
+				movingRight = false;
+				movingDown = false;
+				buckyPositionY += delta * .1f; 
 				if (buckyPositionY > -1059) {
 					buckyPositionY -= delta * .1f;
-
 				}
-
 			}
+			// if(keyReleased(key, c))
 			if (input.isKeyDown(Input.KEY_DOWN) || input.isKeyDown(Input.KEY_S)) {
 				down = true;
 				up = false;
 				left = false;
 				right = false;
+				movingUp = false;
+				movingLeft = false;
+				movingRight = false;
+				movingDown = true;
 				buckyPositionY -= delta * .1f;
 
 				if (buckyPositionY < -2289) {
@@ -192,6 +242,10 @@ public class Play extends BasicGameState {
 				right = false;
 				up = false;
 				down = false;
+				movingUp = false;
+				movingLeft = true;
+				movingRight = false;
+				movingDown = false;
 				buckyPositionX += delta * .1f;
 
 				if (buckyPositionX > -853) {
@@ -205,6 +259,10 @@ public class Play extends BasicGameState {
 				left = false;
 				down = false;
 				up = false;
+				movingUp = false;
+				movingLeft = false;
+				movingRight = true;
+				movingDown = false;
 				buckyPositionX -= delta * .1f;
 
 				if (buckyPositionX < -2094) {
