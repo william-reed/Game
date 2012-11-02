@@ -143,7 +143,7 @@ public class Play extends BasicGameState {
 				rightAnimation = spriteRight02;
 			}
 		}
-		// Homless man path
+		// Homeless man path
 		if (play == true) {
 			if (move01 == true) {
 				homelessX += .04f;
@@ -220,6 +220,9 @@ public class Play extends BasicGameState {
 					buckyPositionY -= delta * .1f;
 				}
 			}
+			if (!(input.isKeyDown(Input.KEY_UP) || input.isKeyDown(Input.KEY_W))){
+				upAnimation = spriteUp;
+			}
 			// if(keyReleased(key, c))
 			if (input.isKeyDown(Input.KEY_DOWN) || input.isKeyDown(Input.KEY_S)) {
 				down = true;
@@ -237,6 +240,9 @@ public class Play extends BasicGameState {
 				}
 
 			}
+			if (!(input.isKeyDown(Input.KEY_DOWN) || input.isKeyDown(Input.KEY_S))){
+				downAnimation = spriteDown;
+			}
 			if (input.isKeyDown(Input.KEY_LEFT) || input.isKeyDown(Input.KEY_A)) {
 				left = true;
 				right = false;
@@ -251,7 +257,9 @@ public class Play extends BasicGameState {
 				if (buckyPositionX > -853) {
 					buckyPositionX -= delta * .1f;
 				}
-
+			}
+			if (!(input.isKeyDown(Input.KEY_LEFT) || input.isKeyDown(Input.KEY_A))){
+				leftAnimation = spriteLeft;
 			}
 			if (input.isKeyDown(Input.KEY_RIGHT)
 					|| input.isKeyDown(Input.KEY_D)) {
@@ -270,7 +278,9 @@ public class Play extends BasicGameState {
 				}
 
 			}
-		} else {
+		} 
+		if (!(input.isKeyDown(Input.KEY_RIGHT) || input.isKeyDown(Input.KEY_D))){
+			rightAnimation = spriteRight;
 		}
 
 		// escape
